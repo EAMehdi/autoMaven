@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Insert your name
+name=
+fullname=$name"."$1
+project=$1
+
+#echo $current_dir
+#echo $name.$1
+#echo $fullname
+
+maven_gen (){
+	mvn archetype:generate -DarchetypeArtifactId=maven-archetype-quickstart -DgroupId=fr.dauphine.ja.$fullname  -DartifactId=$project -DinteractiveMode=false && cd $project && echo "# "$project > reponses.md && echo "Maven Folder Succesfully generated"
+}
+
+check_origin(){
+	current_dir=$(pwd)
+	cp ~/original_pom.xml ./temp.xml || ( echo "original_pom.xml Download" && cd ~/  && wget https://gist.githubusercontent.com/EAMehdi/d0174eedd3d70adcd64d1d3c4d2c7997/raw/ee17c595303463e70588e4b8b7a2d46e06f9512e/original_pom.xml && cd $current_dir && cp ~/original_pom.xml ./temp.xml ) && echo "original_pom.xml Succesfully added in your Folder"   
+	
+}
+
+edit_temp(){
+	sed -i 's:<groupId></groupId>:<groupId>'"$fullname"'</groupId>:' temp.xml 
+	sed -i 's:<artifactId></artifactId>:<artifactId>'$project'</artifactId>:' temp.xml 
+	sed -i 's:<name></name>:<name>'$project'</name>:' temp.xml 
+	sed -i 's:<mainClass></mainClass>:<mainClass>'"$fullname"'</mainClass>:' temp.xml
+	rm pom.xml && mv temp.xml pom.xml
+}
+
+
+#maven_gen && check_origin && edit_temp
+
+[ -z "$1" ] || [ -z "$name" ] || maven_gen && check_origin && edit_temp && mvn compile
