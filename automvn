@@ -2,8 +2,7 @@
 
 # Insert your name
 name=
-fullname="fr.dauphine.ja."$name"."$1
-fullname2="$name"."$1
+fullname="fr.dauphine.ja.$name.$1"
 project=$1
 
 #echo $current_dir
