@@ -2,7 +2,8 @@
 
 # Insert your name
 name=
-fullname=$name"."$1
+fullname="fr.dauphine.ja."$name"."$1
+fullname2="$name"."$1
 project=$1
 
 #echo $current_dir
@@ -10,7 +11,7 @@ project=$1
 #echo $fullname
 
 maven_gen (){
-	mvn archetype:generate -DarchetypeArtifactId=maven-archetype-quickstart -DgroupId=fr.dauphine.ja.$fullname  -DartifactId=$project -DinteractiveMode=false && cd $project && echo "# "$project > reponses.md && echo "Maven Folder Succesfully generated"
+	mvn archetype:generate -DarchetypeArtifactId=maven-archetype-quickstart -DgroupId=$fullname  -DartifactId=$project -DinteractiveMode=false && cd $project && echo "# "$project > reponses.md && echo "Maven Folder Succesfully generated"
 }
 
 check_origin(){
